@@ -1,0 +1,398 @@
+<!DOCTYPE HTML>
+
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}" />
+<link rel="icon" th:href="@{/img/ico.png}">
+
+
+<title>Point Book</title>
+</head>
+
+<body onload="getLocation()">
+
+	<header>
+		<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+			<a class="navbar-brand"> <img th:src="@{/img/ico.png}" width="30"
+				height="30" class="d-inline-block align-top" alt="">
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#collapsed" aria-controls="navbarTogglerDemo01"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsed">
+
+				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+					<li class="nav-item "><a th:href="@{/pointbook/home}"
+						class="nav-link active">Home Page <span class="sr-only">(current)</span>
+					</a></li>
+
+					<li class="nav-item"><a class="nav-link"
+						th:href="@{/pointbook/history}">History</a></li>
+
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<div class="container" style="margin-left: 20px">
+
+		<div class="card text-center">
+		<div class= "row">
+			<div class="col-sm">
+			
+			<img th:src="@{/img/corp.png}" class="card-img-top" alt="..." style="height:300px; width:300px">
+			</div>
+			<div class="col-sm">
+		 	llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		   llorem ipsum dummy text
+		        </div>
+			
+	         <div class="col-sm text-center">
+			<div class="card-body ">
+				<button onclick="enter()" id="in" class="btn btn-success">
+					<i class="fa fa-calendar-check-o"></i>Chegada
+				</button>
+				<button onclick="out()" id="out" class="btn btn-danger">
+					<i class="fa fa-calendar-times-o"></i>Saida
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+	<!-- Modal -->
+	<div onload="mapShow()" class="modal fade" id="local" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header  danger">
+					<h5 class="modal-title" id="exampleModalLabel">Tu estas
+						aqui!!!</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="localizacao" style="height: 400px; width: 400px;">
+
+						<!-- 						<img src="" alt="map" id="location" /> -->
+					</div>
+
+					<!-- 					<p id="locate"></p> -->
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Fechar</button>
+					<button type="button" id="confirm" class="btn btn-primary"
+						onclick="save()">Confirmar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal -->
+	<div onload="mapShow()" class="modal fade" id="localout" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header  danger">
+					<h5 class="modal-title" id="exampleModalLabel">Tu estas
+						aqui!!!</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div id="localizac" style="height: 400px; width: 400px;">
+
+						<!-- 						<img src="" alt="map" id="location" /> -->
+					</div>
+
+					<!-- 					<p id="locate"></p> -->
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Fechar</button>
+					<button type="button" id="confirmout" class="btn btn-primary"
+						onclick="saveOut()">Confirmar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- <p id="demo"></p> -->
+
+	<!-- success mod -->
+
+
+	<div class="modal fade right" id="success_recharge" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div
+			class="modal-dialog modal-notify modal-success modal-side modal-bottom-right"
+			role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true" class="white-text">&times;</span>
+					</button>
+				</div>
+
+				<!--Body-->
+				<div class="modal-body">
+					<div class="text-center">
+						<i class=" 	fa fa-check-square-o fa-4x mb-3 animated rotateIn"></i>
+						<p>Bem Vindo</p>
+					</div>
+				</div>
+
+
+			</div>
+			<!--/.Content-->
+		</div>
+	</div>
+	<!-- end -->
+	<!-- start fail -->
+
+	<div class="modal fade right" id="fail_recharge" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div
+			class="modal-dialog modal-notify modal-danger modal-side modal-bottom-right"
+			role="document">
+			<!--Content-->
+			<div class="modal-content">
+				<!--Header-->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true" class="white-text">&times;</span>
+					</button>
+				</div>
+
+				<!--Body-->
+				<div class="modal-body">
+					<div class="text-center">
+						<i
+							class=" 	fa fa-exclamation-triangle fa-4x mb-3 animated rotateIn"></i>
+						<p>Not in office</p>
+					</div>
+				</div>
+
+
+			</div>
+			<!--/.Content-->
+		</div>
+	</div>
+
+
+	<!-- end fail -->
+
+
+
+
+
+	<script>
+		var x = document.getElementById("locate");
+
+		function getLocation() {
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(showPosition);
+				mapShow();
+			} else {
+				x.innerHTML = "Geolocation is not supported by this browser.";
+			}
+		}
+
+		function showPosition(position) {
+			getPosition(position);
+			// 			x.innerHTML = "Latitude: " + position.coords.latitude
+			// 					+ "<br>Longitude: " + position.coords.longitude;
+		}
+
+		function enter() {
+			//$('#confirm').hide();
+			//  $('#btn'+id).after('<span id="loading" style="float: right;" class="spinner-border text-danger" role="status"></span>');
+			$('#local').modal('show');
+
+		}
+		function out() {
+			//$('#confirm').hide();
+			//  $('#btn'+id).after('<span id="loading" style="float: right;" class="spinner-border text-danger" role="status"></span>');
+			$('#localout').modal('show');
+
+		}
+
+		function getPosition(position) {
+
+			var latlon = position.coords.latitude + ","
+					+ position.coords.longitude;
+			var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="
+					+ latlon + "&zoom=14&size=400x300";
+			//document.getElementById("location").innerHTML = "<img src='"+img_url+"'>";
+
+		}
+
+		function save() {
+			$('#confirm').hide();
+			$('#confirm')
+					.after(
+							'<span id="loading" style="float: right;" class="spinner-border text-danger" role="status"></span>');
+
+			navigator.geolocation.getCurrentPosition(function(position) {
+				var lat = position.coords.latitude;
+				var longit = position.coords.longitude;
+				$.ajax({
+					type : "POST",
+					url : "/pointbook/reg",
+					data : {
+						lat : lat,
+						longit : longit
+					},
+					async : false,
+					success : function(result) {
+						if (result) {
+							$("#success_recharge").modal('show');
+							$("#local").modal('hide');
+							$('#confirm').show();
+							$('#loading').hide();
+							$('#in').prop('disabled', true);
+						} else {
+							$("#fail_recharge").modal('show');
+							$("#local").modal('hide');
+							$('#confirm').show();
+							$('#loading').hide();
+						}
+					}
+
+				});
+			});
+
+		}
+
+		function saveOut() {
+			$('#confirmout').hide();
+			$('#confirmout')
+					.after(
+							'<span id="loadingout" style="float: right;" class="spinner-border text-danger" role="status"></span>');
+
+			navigator.geolocation.getCurrentPosition(function(position) {
+				var lat = position.coords.latitude;
+				var longit = position.coords.longitude;
+				$.ajax({
+					type : "POST",
+					url : "/pointbook/out",
+					data : {
+						lat : lat,
+						longit : longit
+					},
+					async : false,
+					success : function(result) {
+						if (result) {
+							$("#success_recharge").modal('show');
+							$("#localout").modal('hide');
+							$('#confirmout').show();
+							$('#loadingout').hide();
+							$('#out').prop('disabled', true);
+						} else {
+							$("#fail_recharge").modal('show');
+							$("#localout").modal('hide');
+							$('#confirmout').show();
+							$('#loadingout').hide();
+						}
+					}
+
+				});
+			});
+
+		}
+		//
+
+		//FUNCAO PARA BUSCAR MAPA NO GOOGLE MAPS
+	</script>
+	<script
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWO5OROSfrm-PvUlIYoUvRqIKAh0PxPWw"></script>
+	<script>
+		function mapShow() {
+			var directionsService = new google.maps.DirectionsService();
+			var directionsDisplay = new google.maps.DirectionsRenderer();
+
+			var mapOptions = {
+				zoom : 18,
+				center : {
+					lat : -25.97365,
+					lng : 32.571552499999996
+				}
+			}
+
+			var map = new google.maps.Map(document
+					.getElementById('localizacao'), mapOptions);
+			var mapout = new google.maps.Map(document
+					.getElementById('localizac'), mapOptions);
+			directionsDisplay.setMap(mapout);
+		}
+		//
+	</script>
+
+
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script th:src="@{/bootstrap/js/jquery-3.3.1.min.js}"></script>
+	<script th:src="@{/bootstrap/js/popper.min.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+
+
+
+
+
+
+</body>
+
+
+
+</html>

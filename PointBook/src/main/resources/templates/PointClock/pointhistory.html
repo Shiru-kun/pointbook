@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" type="text/css"
+	th:href="@{/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}" />
+<link rel="icon" th:href="@{/img/ico.png}">
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/datatables.min.css}" />
+
+<title>Point Book</title>
+</head>
+
+<body >
+	<header>
+		<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+			<a class="navbar-brand"> <img th:src="@{/img/ico.png}" width="30"
+				height="30" class="d-inline-block align-top" alt="">
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+				data-target="#collapsed" aria-controls="navbarTogglerDemo01"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsed">
+
+				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+					<li class="nav-item "><a class="nav-link " th:href="@{/pointbook/home}">Home
+							Page 
+					</a></li>
+
+					<li class="nav-item"><a class="nav-link active" th:href="@{/pointbook/history}">History
+					<span class="sr-only">(current)</span></a>
+					</li>
+
+				</ul>
+			</div>
+		</nav>
+	</header>
+<br>
+<br>
+<br>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8">
+					<h1 class="h4 text-black">Estatisticas</h1>
+				
+
+				<table id="tabs" class="display nowrap" style="width: 100%">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Hour</th>
+							<th>State</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="point : ${points}">
+							<td th:text="${point.user.name}"></td>
+							<td th:text="${#temporals.format(point.dateTime, 'dd-MM-yyyy HH:mm')}"></td>
+							<td th:text="${point.status}"></td>
+							<td> <a href="#"> <i class="fa fa-comments"> </i></a> 
+							
+							</td>
+							
+						</tr>
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script th:src="@{/bootstrap/js/jquery-3.3.1.min.js}"></script>
+	<script th:src="@{/bootstrap/js/popper.min.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/bootstrap/js/datatables.min.js}"></script>
+    
+
+
+
+<script>
+$(document).ready( function () {
+    $('#tabs').DataTable();
+} );
+</script>
+
+
+
+</body>
+
+
+
+</html>
