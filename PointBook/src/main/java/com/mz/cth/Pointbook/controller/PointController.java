@@ -39,7 +39,7 @@ public class PointController {
 	@PostMapping("/reg")
 	public @ResponseBody boolean save(@RequestParam("lat") double lat, @RequestParam("longit") double longit) {
 		System.err.println(lat + "  " + longit + " date" + LocalDateTime.now());
-		boolean coordinatesMatch = (lat == -25.9736539 && longit == 32.571618799999996);
+		boolean coordinatesMatch = (lat == -25.9683353 && longit == 32.593817);
 		// -25.9530206 32.5711991
 		boolean inWorkSaved = false;
 		if (coordinatesMatch) {
@@ -59,7 +59,7 @@ public class PointController {
 	@PostMapping("/out")
 	public @ResponseBody boolean  saveOut(@RequestParam("lat") double lat, @RequestParam("longit") double longit) {
 		System.err.println(lat + "  " + longit + " date" + LocalDateTime.now());
-		boolean coordinatesMatch = (lat == -25.9736539 && longit == 32.571618799999996);
+		boolean coordinatesMatch = (lat == -25.9683353 && longit == 32.593817);
 		// -25.9530206 32.5711991
 		boolean inWorkSaved = false;
 		if (coordinatesMatch) {

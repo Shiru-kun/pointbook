@@ -57,46 +57,33 @@
 	<div class="container" style="margin-left: 20px">
 
 		<div class="card text-center">
-		<div class= "row">
-			<div class="col-sm">
-			
-			<img th:src="@{/img/corp.png}" class="card-img-top" alt="..." style="height:300px; width:300px">
-			</div>
-			<div class="col-sm">
-		 	llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		   llorem ipsum dummy text
-		        </div>
-			
-	         <div class="col-sm text-center">
-			<div class="card-body ">
-				<button onclick="enter()" id="in" class="btn btn-success">
-					<i class="fa fa-calendar-check-o"></i>Chegada
-				</button>
-				<button onclick="out()" id="out" class="btn btn-danger">
-					<i class="fa fa-calendar-times-o"></i>Saida
-				</button>
+			<div class="row">
+				<div class="col-sm">
+
+					<img th:src="@{/img/corp.png}" class="card-img-top" alt="..."
+						style="height: 300px; width: 300px">
+				</div>
+				<div class="col-sm">llorem ipsum dummy text llorem ipsum dummy
+					text llorem ipsum dummy text llorem ipsum dummy text llorem ipsum
+					dummy text llorem ipsum dummy text llorem ipsum dummy text llorem
+					ipsum dummy text llorem ipsum dummy text llorem ipsum dummy text
+					llorem ipsum dummy text</div>
+
+				<div class="col-sm text-center">
+					<div class="card-body ">
+						<button onclick="enter()" id="in" class="btn btn-success">
+							<i class="fa fa-calendar-check-o"></i>Chegada
+						</button>
+						<button onclick="out()" id="out" class="btn btn-danger">
+							<i class="fa fa-calendar-times-o"></i>Saida
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
+
+
 	</div>
-</div>
-
-
-
 	<!-- Modal -->
 	<div onload="mapShow()" class="modal fade" id="local" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -360,22 +347,35 @@
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBWO5OROSfrm-PvUlIYoUvRqIKAh0PxPWw"></script>
 	<script>
 		function mapShow() {
-			var directionsService = new google.maps.DirectionsService();
-			var directionsDisplay = new google.maps.DirectionsRenderer();
 
-			var mapOptions = {
-				zoom : 18,
-				center : {
-					lat : -25.97365,
-					lng : 32.571552499999996
+			var navigation = navigator.geolocation.getCurrentPosition(function(
+					position) {
+				var lat = position.coords.latitude;
+				var longit = position.coords.longitude;
+				var coordinates = new google.maps.LatLng(lat, longit);
+
+				var mapOptions = {
+					zoom : 18,
+					center : coordinates,
+					mapTypeID : google.maps.MapTypeId.ROADMAP
+
 				}
-			}
+				var map = new google.maps.Map(document
+						.getElementById('localizacao'), mapOptions);
+				var marker = new google.maps.Marker({
+					map : map,
+					position : coordinates
+				});
 
-			var map = new google.maps.Map(document
-					.getElementById('localizacao'), mapOptions);
-			var mapout = new google.maps.Map(document
-					.getElementById('localizac'), mapOptions);
-			directionsDisplay.setMap(mapout);
+				var map_saida = new google.maps.Map(document
+						.getElementById('localizac'), mapOptions);
+				var marker_saida = new google.maps.Marker({
+					map : map_saida,
+					position : coordinates
+				});
+
+			});
+
 		}
 		//
 	</script>
@@ -385,10 +385,6 @@
 	<script th:src="@{/bootstrap/js/jquery-3.3.1.min.js}"></script>
 	<script th:src="@{/bootstrap/js/popper.min.js}"></script>
 	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-
-
-
-
 
 
 </body>
